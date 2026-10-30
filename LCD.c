@@ -122,7 +122,6 @@ void LCD_DisplayString(unsigned char *ptr) {
 			LCD_WriteData(ptr[i]);
 		}
 	
-	
 }
 
 void LCD_DisplayTime(unsigned int min, unsigned int sec, unsigned int microsec)
@@ -130,12 +129,13 @@ void LCD_DisplayTime(unsigned int min, unsigned int sec, unsigned int microsec)
 	char TimeString[20]; //helps conver numbers to string
 	
 	//write on first line
-	LCD_WriteCom(0x40);
-	//LCD_WriteCom(0x80);
+	//LCD_WriteCom(0x40);
+	LCD_WriteCom(0x80);
 	
 	
 	//display min
 	sprintf(TimeString, "%02u:%02u:%01u", min,sec,microsec); // Convert integer to string
+	TimeString[7] = '\0';
 	LCD_DisplayString((unsigned char*) TimeString );
 }
 
@@ -143,7 +143,7 @@ void Pulse()
 {
 	GPIOB->ODR |= 0x00000004;									//set E=1;
 	delay_us(40);
-	GPIOB->ODR &= 0xFFFFFFFB;									////set E=0;
+	GPIOB->ODR &= 0xFFFFFFFB;									//set E=0;
 	delay_us(40);
 }
 
